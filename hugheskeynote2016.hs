@@ -37,3 +37,34 @@ mul m n f x = m (n f) x
 -- ghci> add (add seven two) (mul two eight) (+1) 0
 -- 25
 
+-- Next step.
+-- http://www.youtube.com/watch?v=Z35Tt87pIpg&t=8m41s
+-- factorial function. Some compiler errors:
+
+-- Occurs check:  cannot construct the infinite type
+--   t ~ t → t → t
+--
+-- A LOT of lines of error...(+100) !!!!
+
+fact n =
+  ifte (iszero n)
+    one
+    (mul n (fact (decr n )))
+
+-- incr is not in the slides.  But it's trivial.
+incr m f x = add m one f x
+
+iszero  n =
+  n (\_ -> false) true
+
+decr n =
+  n (\m f x -> f (m incr zero))
+    zero
+    (\x -> x)
+    zero
+
+-- ghci> fact (add one (mul two two)) (+1) 0
+-- 120
+-- ghci> fact five (+1) 0
+-- 120
+
