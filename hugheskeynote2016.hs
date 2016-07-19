@@ -1,3 +1,4 @@
+{-# LANGUAGE RankNTypes #-}
 --     hugheskeynote2016.hs
 module Hugheskeynote2016 where
 -- Erlang Factroy SF 2016 - Keynote - John Hughes - Why Functional Programming Matters
@@ -37,15 +38,18 @@ mul m n f x = m (n f) x
 -- ghci> add (add seven two) (mul two eight) (+1) 0
 -- 25
 
--- Next step.
+
 -- http://www.youtube.com/watch?v=Z35Tt87pIpg&t=8m41s
 -- factorial function. Some compiler errors:
 
 -- Occurs check:  cannot construct the infinite type
 --   t ~ t → t → t
 --
--- A LOT of lines of error...(+100) !!!!
-
+-- A LOT of lines of error...(+100) ... but a very easy fix: explicit type definition.
+-- 
+fact ::
+  (forall a. (a->a)->a->a) ->
+  (a->a)->a->a
 fact n =
   ifte (iszero n)
     one
